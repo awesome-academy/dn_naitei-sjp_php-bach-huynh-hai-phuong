@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@font-face {
+    font-family: Roboto;
+    src: url("../assets/fonts/Roboto-VariableFont_wdth\,wght.ttf");
+}
+
+@theme {
+    --font-roboto: Roboto, "sans-serif";
+}
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));

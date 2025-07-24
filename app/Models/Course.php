@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Models;
+
+use App\Models\Enums\CourseStatus;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
+class Course extends Model
+{
+    protected function casts(): array
+    {
+        return [
+            'status' => CourseStatus::class,
+            'started_at' => 'datetime',
+            'finished_at' => 'datetime',
+        ];
+    }
+
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'user_course')
+            ->withPivot('is_active', 'assigned_at')
+            ->withTimestamps();
+    }
+
+    public function supervisors(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'course_supervisors', 'course_id', 'supervisor_id')->withTimestamps();
+    }
+
+    public function subjects(): BelongsToMany
+    {
+        return $this->belongsToMany(Subject::class, 'course_subject')
+            ->withPivot('sort_order', 'status', 'started_at', 'finished_at', 'estimated_duration_days')
+            ->withTimestamps();
+    }
+}

@@ -3,11 +3,21 @@
 namespace App\Models;
 
 use App\Models\Enums\CourseStatus;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Course extends Model
 {
+    /** @use HasFactory<\Database\Factories\CourseFactory> */
+    use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'description',
+        'featured_image',
+    ];
+
     protected function casts(): array
     {
         return [

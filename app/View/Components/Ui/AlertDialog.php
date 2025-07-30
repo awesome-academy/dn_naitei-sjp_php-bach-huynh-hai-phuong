@@ -1,17 +1,17 @@
 <?php
 
-namespace App\View\Components\Layout;
+namespace App\View\Components\Ui;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Dashboard extends Component
+class AlertDialog extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(public string $title, public string $description)
     {
         //
     }
@@ -21,6 +21,6 @@ class Dashboard extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.layout.dashboard');
+        return view('components.ui.alert-dialog');
     }
 }

@@ -1,19 +1,19 @@
 <?php
 
-namespace App\View\Components\Layout;
+namespace App\View\Components\Layout\AdminPanel;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Root extends Component
+class UserNav extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $title = '')
+    public function __construct()
     {
-        $this->title = $title ?: config('app.name');
+        //
     }
 
     /**
@@ -21,6 +21,6 @@ class Root extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.layout.root');
+        return view('components.layout.admin-panel.user-nav');
     }
 }

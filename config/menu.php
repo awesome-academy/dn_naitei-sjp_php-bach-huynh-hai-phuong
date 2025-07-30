@@ -25,6 +25,21 @@ return [
                     'icon' => 'fas-plus',
                 ],
             ]
-        ]
+        ],
+        [
+            'groupLabel' => 'subject.subjects',
+            'menu' => [
+                [
+                    'href' => '/subjects',
+                    'label' => 'subject.all_subjects',
+                    'icon' => 'fas-book',
+                ],
+                [
+                    'href' => '/subjects/create',
+                    'label' => 'subject.create_subject',
+                    'icon' => 'fas-plus',
+                ],
+            ]
+        ],
     ]
 ];

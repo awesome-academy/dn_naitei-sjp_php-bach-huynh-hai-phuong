@@ -31,4 +31,5 @@ return [
     'course_create_failed' => 'Tạo khoá học thất bại. Vui lòng thử lại.',
     'course_update_failed' => 'Cập nhật khoá học thất bại. Vui lòng thử lại.',
     'course_delete_failed' => 'Xoá khoá học thất bại. Vui lòng thử lại.',
+    'course_delete_warning' => 'Hành động này không thể hoàn tác. Nó sẽ xóa vĩnh viễn khoá học khỏi hệ thống.',
 ];

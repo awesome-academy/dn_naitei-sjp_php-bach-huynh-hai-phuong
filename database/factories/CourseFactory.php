@@ -18,11 +18,11 @@ class CourseFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->sentence(3),
-            'description' => $this->faker->paragraph(),
-            'status' => $this->faker->randomElement(array_map(fn($case) => $case->value, CourseStatus::cases())),
-            'started_at' => $this->faker->optional()->dateTimeThisYear(),
-            'finished_at' => $this->faker->optional()->dateTimeThisYear(),
+            'title' => fake()->sentence(3),
+            'description' => fake()->paragraph(),
+            'status' => fake()->randomElement(array_map(fn($case) => $case->value, CourseStatus::cases())),
+            'started_at' => fake()->optional()->dateTimeThisYear(),
+            'finished_at' => fake()->optional()->dateTimeThisYear(),
             'featured_image' => '/courses/wallhaven-3q9qky.png',
         ];
     }

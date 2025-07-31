@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Ui;
+namespace App\View\Components\Courses;
 
 use App\Models\Enums\BadgeVariant;
 use App\Models\Enums\CourseStatus;
@@ -35,6 +35,6 @@ class CourseStatusBadge extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.ui.course-status-badge');
+        return view('components.courses.course-status-badge');
     }
 }

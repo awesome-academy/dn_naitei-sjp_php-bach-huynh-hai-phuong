@@ -36,3 +36,10 @@ if (!function_exists('getSurroundingPages')) {
     }
 
 }
+
+if (!function_exists('formatDate')) {
+    function formatDate($date): string
+    {
+        return $date ? \Carbon\Carbon::parse($date)->format('M j, Y') : '?';
+    }
+}

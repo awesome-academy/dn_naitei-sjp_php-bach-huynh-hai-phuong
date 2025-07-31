@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\SubjectController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(callback: function () {
@@ -40,6 +41,26 @@ Route::middleware('auth')->group(function () {
             ->name('update');
 
         Route::delete('{course}', [CourseController::class, 'destroy'])
+            ->name('destroy');
+    });
+
+    Route::prefix('subjects')->name('subjects.')->group(function () {
+        Route::get('/', [SubjectController::class, 'index'])
+            ->name('index');
+
+        Route::get('create', [SubjectController::class, 'create'])
+            ->name('create');
+
+        Route::post('store', [SubjectController::class, 'store'])
+            ->name('store');
+
+        Route::get('{subject}/edit', [SubjectController::class, 'edit'])
+            ->name('edit');
+
+        Route::put('{subject}', [SubjectController::class, 'update'])
+            ->name('update');
+
+        Route::delete('{subject}', [SubjectController::class, 'destroy'])
             ->name('destroy');
     });
 });

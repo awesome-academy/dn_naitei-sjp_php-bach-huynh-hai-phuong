@@ -31,4 +31,5 @@ return [
     'course_create_failed' => 'Failed to create course. Please try again.',
     'course_update_failed' => 'Failed to update course. Please try again.',
     'course_delete_failed' => 'Failed to delete course. Please try again.',
+    'course_delete_warning' => 'This action cannot be undone. This will permanently delete the course from the system.'
 ];

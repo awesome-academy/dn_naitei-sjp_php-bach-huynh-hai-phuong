@@ -9,10 +9,10 @@
         </x-ui.card.header>
         <x-ui.card.content>
             @if ($isEdit)
-                <x-ui.course-form :id="$course->id" :title="$course->title" :description="$course->description"
+                <x-form.course-form :id="$course->id" :title="$course->title" :description="$course->description"
                     :featuredImage="$course->featured_image" />
             @else
-                <x-ui.course-form />
+                <x-form.course-form />
             @endif
         </x-ui.card.content>
     </x-ui.card>

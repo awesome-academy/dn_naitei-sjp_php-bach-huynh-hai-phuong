@@ -19,19 +19,19 @@
                 <x-ui.button class="w-30 rounded-full" tag="a"
                     href="{{ route('courses.edit', $course->id) }}">{{ __('course.edit') }} <x-fas-edit /></x-ui.button>
                 <x-ui.alert-dialog title="{{ __('alert.confirm') }}"
-                    description="{{ __('alert.warning', ['resource' => 'course']) }}">
+                    description="{{ __('course.course_delete_warning') }}">
                     <x-slot:trigger>
                         <x-ui.button class="w-30 rounded-full" variant="destructive" @click="modalOpen = true">
                             {{ __('course.delete') }} <x-fas-trash-can />
                         </x-ui.button>
                     </x-slot:trigger>
                     <x-slot:actions>
-                        <x-ui.button @click="modalOpen = false">{{ __('course.cancel') }}</x-ui.button>
+                        <x-ui.button @click="modalOpen = false">{{ __('alert.cancel') }}</x-ui.button>
                         <form action="{{ route('courses.destroy', $course->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <x-ui.button variant="destructive" @click="modalOpen = false"
-                                type="submit">{{ __('course.delete') }}</x-ui.button>
+                                type="submit">{{ __('alert.delete') }}</x-ui.button>
                         </form>
                     </x-slot:actions>
                 </x-ui.alert-dialog>

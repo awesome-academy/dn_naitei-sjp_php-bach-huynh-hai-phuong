@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\Enums\CourseStatus;
 use App\Models\Enums\CourseSubjectStatus;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -128,6 +129,49 @@ class CourseController extends Controller
         } catch (\Throwable $e) {
             Log::error('Course delete failed: ' . $e->getMessage(), ['exception' => $e]);
             return back()->with('notification', __('course.course_delete_failed'))->withInput();
+        }
+    }
+
+    public function showAddSubject(Course $course)
+    {
+        $subjects = $course->subjects()->select('subjects.id')->pluck('subjects.id')->toArray();
+        $availableSubjects = Subject::whereNotIn('id', $subjects)->get();
+
+        $formatedAvailableSubjects = $availableSubjects->map(function ($subject) {
+            return [
+                'value' => $subject->id,
+                'title' => $subject->title,
+            ];
+        })->toArray();
+
+        return view('courses.add-subject', compact('course', 'formatedAvailableSubjects'));
+    }
+
+    public function addSubject(Request $request, Course $course)
+    {
+        $data = $request->validate([
+            'subject_id' => ['required', 'exists:subjects,id'],
+            'estimated_duration_days' => ['required', 'integer', 'min:1'],
+        ]);
+
+        try {
+            $alreadyAdded = $course->subjects()->where('subject_id', $data['subject_id'])->exists();
+            if ($alreadyAdded) {
+                return back()->with('notification', __('course_subject.already_attached'))->withInput();
+            }
+
+            $maxSortOrder = $course->subjects()->max('sort_order') ?? 0;
+            $data['sort_order'] = $maxSortOrder + 1;
+
+            $course->subjects()->attach($data['subject_id'], [
+                'sort_order' => $data['sort_order'],
+                'estimated_duration_days' => $data['estimated_duration_days'],
+            ]);
+
+            return redirect()->route('courses.show', $course->id)->with('notification', __('course_subject.added'));
+        } catch (\Throwable $e) {
+            Log::error('Add subject to course failed: ' . $e->getMessage(), ['exception' => $e]);
+            return back()->with('notification', __('course_subject.add_failed'))->withInput();
         }
     }
 

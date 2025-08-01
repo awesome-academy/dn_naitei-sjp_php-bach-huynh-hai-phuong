@@ -61,4 +61,5 @@
         </div>
     </div>
     <x-courses.subjects :subjects="$subjects" />
+    <x-ui.button tag="a" href="{{ route('courses.subject.form', $course->id) }}" class="w-full mt-4">{{ __('course_subject.add') }} <x-fas-plus class="size-4" /></x-ui.button>
 </x-layout.admin-panel>

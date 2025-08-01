@@ -42,6 +42,12 @@ Route::middleware('auth')->group(function () {
 
         Route::delete('{course}', [CourseController::class, 'destroy'])
             ->name('destroy');
+
+        Route::post('{course}/subjects', [CourseController::class, 'addSubject'])
+            ->name('subject.add');
+
+        Route::get('{course}/subjects/form', [CourseController::class, 'showAddSubject'])
+            ->name('subject.form');
     });
 
     Route::prefix('subjects')->name('subjects.')->group(function () {

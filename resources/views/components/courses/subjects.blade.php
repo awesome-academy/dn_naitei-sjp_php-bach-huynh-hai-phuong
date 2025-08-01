@@ -48,4 +48,3 @@
         <p class="text-sm text-muted-foreground text-center">{{ __('course_subject.subject_empty') }}</p>
     @endforelse
 </div>
-<x-ui.button class="w-full mt-4">{{ __('course_subject.add') }} <x-fas-plus class="size-4" /></x-ui.button>

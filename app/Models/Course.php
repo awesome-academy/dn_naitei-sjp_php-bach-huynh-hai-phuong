@@ -43,6 +43,7 @@ class Course extends Model
     public function subjects(): BelongsToMany
     {
         return $this->belongsToMany(Subject::class, 'course_subject')
+            ->orderByPivot('sort_order')
             ->withPivot('sort_order', 'status', 'started_at', 'finished_at', 'estimated_duration_days')
             ->withTimestamps();
     }

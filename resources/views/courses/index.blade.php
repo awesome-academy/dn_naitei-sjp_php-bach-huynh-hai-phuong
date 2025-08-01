@@ -11,8 +11,7 @@
                                 <img src="{{ asset('/storage/' . $course->featured_image) }}" alt="{{ $course->title }}"
                                     class="absolute inset-0 w-full h-full object-cover object-top rounded-t-xl">
                             </a>
-                            <x-ui.course-status-badge :status="$course->status->value"
-                                class="absolute top-4 right-4">{{ $course->status->value }}</x-ui.course-status-badge>
+                            <x-courses.course-status-badge :status="$course->status->value" class="absolute top-4 right-4" />
                             <div class="p-4">
                                 <a class="text-lg font-bold line-clamp-1" title="{{ $course->title }}"
                                     href="{{ route('courses.show', $course->id) }}">{{ $course->title }}</a>

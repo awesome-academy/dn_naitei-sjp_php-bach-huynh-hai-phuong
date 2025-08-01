@@ -55,9 +55,10 @@
                         class="font-semibold">{{ __('course.updated_at') }}:</span>
                     {{ $courseDetails['updated_at'] }}</p>
                 <p class="text-sm text-muted-foreground"><span class="font-semibold">{{ __('course.status') }}:</span>
-                    <x-ui.course-status-badge :status="$courseDetails['status']" />
+                    <x-courses.course-status-badge :status="$courseDetails['status']" />
                 </p>
             </div>
         </div>
     </div>
+    <x-courses.subjects :subjects="$subjects" />
 </x-layout.admin-panel>

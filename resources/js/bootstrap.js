@@ -1,10 +1,12 @@
 import axios from 'axios';
 import Alpine from 'alpinejs';
+import collapse from '@alpinejs/collapse'
 
 window.axios = axios;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 window.Alpine = Alpine;
+Alpine.plugin(collapse);
 Alpine.store('theme', {
     isDark: false,
 

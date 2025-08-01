@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Enums\CourseStatus;
+use App\Models\Enums\CourseSubjectStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -57,14 +58,23 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
+        $course->load('subjects');
+
+        $subjects = $course->subjects->map(function ($subject) {
+            $subject->status = optional($subject->pivot)->status ?: CourseSubjectStatus::NOT_STARTED->value;
+            $subject->started_at = formatDate(optional($subject->pivot)->started_at);
+            $subject->finished_at = formatDate(optional($subject->pivot)->finished_at);
+            return $subject;
+        });
+
         $courseDetails = [
-            'started_at' => $course->started_at ? $course->started_at->format('M j, Y') : '?',
-            'finished_at' => $course->finished_at ? $course->finished_at->format('M j, Y') : '?',
-            'created_at' => $course->created_at->format('M j, Y'),
-            'updated_at' => $course->updated_at->format('M j, Y'),
+            'started_at' => formatDate($course->started_at),
+            'finished_at' => formatDate($course->finished_at),
+            'created_at' => formatDate($course->created_at),
+            'updated_at' => formatDate($course->updated_at),
             'status' => $course->status ? $course->status->value : CourseStatus::DRAFT->value,
         ];
-        return view('courses.show', compact('course', 'courseDetails'));
+        return view('courses.show', compact('course', 'courseDetails', 'subjects'));
     }
 
 

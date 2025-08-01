@@ -23,6 +23,10 @@
                                 </p>
                             </div>
                             <p class="text-muted-foreground">
+                                <span class="font-bold">{{ __('course_subject.estimated_days') }}:</span>
+                                {{ $subject->estimated_duration_days }}
+                            </p>
+                            <p class="text-muted-foreground">
                                 <span class="font-bold">{{ __('course_subject.started_at') }}:</span>
                                 {{ $subject->started_at }}
                             </p>
@@ -48,4 +52,3 @@
         <p class="text-sm text-muted-foreground text-center">{{ __('course_subject.subject_empty') }}</p>
     @endforelse
 </div>
-<x-ui.button class="w-full mt-4">{{ __('course_subject.add') }} <x-fas-plus class="size-4" /></x-ui.button>

@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Course\AddSubjectRequest;
+use App\Http\Requests\Course\CreateCourseRequest;
+use App\Http\Requests\Course\UpdateCourseRequest;
 use App\Models\Course;
 use App\Models\Enums\CourseStatus;
 use App\Models\Enums\CourseSubjectStatus;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -33,13 +37,9 @@ class CourseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateCourseRequest $request)
     {
-        $data = $request->validate([
-            'title' => ['required', 'string', 'min:3', 'max:255'],
-            'description' => ['required', 'string', 'min:10', 'max:2000'],
-            'featured_image' => ['required', 'image', 'max:2048'],
-        ]);
+        $data = $request->validated();
 
         try {
             $data['featured_image'] = $this->uploadImage($request);
@@ -64,6 +64,7 @@ class CourseController extends Controller
             $subject->status = optional($subject->pivot)->status ?: CourseSubjectStatus::NOT_STARTED->value;
             $subject->started_at = formatDate(optional($subject->pivot)->started_at);
             $subject->finished_at = formatDate(optional($subject->pivot)->finished_at);
+            $subject->estimated_duration_days = optional($subject->pivot)->estimated_duration_days;
             return $subject;
         });
 
@@ -89,13 +90,9 @@ class CourseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Course $course)
+    public function update(UpdateCourseRequest $request, Course $course)
     {
-        $data = $request->validate([
-            'title' => ['required', 'string', 'min:3', 'max:255'],
-            'description' => ['required', 'string', 'min:10', 'max:2000'],
-            'featured_image' => ['nullable', 'image', 'max:2048'],
-        ]);
+        $data = $request->validated();
 
         try {
             if ($request->hasFile('featured_image')) {
@@ -128,6 +125,46 @@ class CourseController extends Controller
         } catch (\Throwable $e) {
             Log::error('Course delete failed: ' . $e->getMessage(), ['exception' => $e]);
             return back()->with('notification', __('course.course_delete_failed'))->withInput();
+        }
+    }
+
+    public function showAddSubject(Course $course)
+    {
+        $subjects = $course->subjects()->select('subjects.id')->pluck('subjects.id')->toArray();
+        $availableSubjects = Subject::whereNotIn('id', $subjects)->get();
+
+        $formattedAvailableSubjects = $availableSubjects->map(function ($subject) {
+            return [
+                'value' => $subject->id,
+                'title' => $subject->title,
+            ];
+        })->toArray();
+
+        return view('courses.add-subject', compact('course', 'formattedAvailableSubjects'));
+    }
+
+    public function addSubject(AddSubjectRequest $request, Course $course)
+    {
+        $data = $request->validated();
+
+        try {
+            $alreadyAdded = $course->subjects()->where('subject_id', $data['subject_id'])->exists();
+            if ($alreadyAdded) {
+                return back()->with('notification', __('course_subject.already_attached'))->withInput();
+            }
+
+            $maxSortOrder = $course->subjects()->max('sort_order') ?? 0;
+            $data['sort_order'] = $maxSortOrder + 1;
+
+            $course->subjects()->attach($data['subject_id'], [
+                'sort_order' => $data['sort_order'],
+                'estimated_duration_days' => $data['estimated_duration_days'],
+            ]);
+
+            return redirect()->route('courses.show', $course->id)->with('notification', __('course_subject.added'));
+        } catch (\Throwable $e) {
+            Log::error('Add subject to course failed: ' . $e->getMessage(), ['exception' => $e]);
+            return back()->with('notification', __('course_subject.add_failed'))->withInput();
         }
     }
 

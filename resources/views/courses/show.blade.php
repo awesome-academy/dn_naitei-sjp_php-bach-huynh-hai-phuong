@@ -3,7 +3,7 @@
         <div>
             @isset($course->featured_image)
                 <img src="{{ asset('/storage/' . $course->featured_image) }}" alt="{{ $course->title }}"
-                    class="aspect-video object-cover w-full rounded-lg">
+                    class="aspect-video object-cover object-top w-full rounded-lg">
             @else
                 <div class="aspect-video w-full rounded-lg flex items-center justify-center">
                     <x-fas-paw class="size-16 text-muted-foreground" />
@@ -61,4 +61,5 @@
         </div>
     </div>
     <x-courses.subjects :subjects="$subjects" />
+    <x-ui.button tag="a" href="{{ route('courses.subject.form', $course->id) }}" class="w-full mt-4">{{ __('course_subject.add') }} <x-fas-plus class="size-4" /></x-ui.button>
 </x-layout.admin-panel>

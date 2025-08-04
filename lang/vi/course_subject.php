@@ -12,4 +12,14 @@ return [
     'started' => 'Đã bắt đầu',
     'finished' => 'Đã hoàn thành',
     'subject_empty' => 'Chưa có môn học nào, thêm môn học ngay!',
+    'add_subject_to_course' => 'Thêm môn học vào :course',
+    'subject' => 'Môn học',
+    'estimated_duration_days' => 'Số ngày ước tính',
+    'already_attached' => 'Môn học đã được thêm, vui lòng chọn môn khác',
+    'added' => 'Thêm môn học thành công',
+    'add_failed' => 'Đã xảy ra lỗi khi thêm môn học',
+    'select_subject' => 'Chọn môn học',
+    'no_subject_to_add' => 'Không có môn học nào để thêm vào',
+    'estimated_days' => 'Số ngày uớc luợng',
+    'back' => 'Trở lại'
 ];

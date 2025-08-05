@@ -21,5 +21,9 @@ return [
     'select_subject' => 'Chọn môn học',
     'no_subject_to_add' => 'Không có môn học nào để thêm vào',
     'estimated_days' => 'Số ngày uớc luợng',
-    'back' => 'Trở lại'
+    'back' => 'Trở lại',
+    'not_added' => 'Môn học chưa được thêm vào khóa học.',
+    'removed' => 'Đã xóa môn học khỏi khóa học.',
+    'remove_failed' => 'Xóa môn học khỏi khóa học thất bại.',
+    'subject_delete_warning' => 'Hành động này không thể hoàn tác. Môn học sẽ bị xóa vĩnh viễn khỏi khóa học.',
 ];

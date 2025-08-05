@@ -138,7 +138,7 @@ class CourseController extends Controller
         }
     }
 
-    public function showAddSubject(Course $course)
+    public function showAddSubjectToCourse(Course $course)
     {
         $subjects = $course->subjects()->select('subjects.id')->pluck('subjects.id')->toArray();
         $availableSubjects = Subject::whereNotIn('id', $subjects)->get();
@@ -153,7 +153,7 @@ class CourseController extends Controller
         return view('courses.add-subject', compact('course', 'formattedAvailableSubjects'));
     }
 
-    public function addSubject(AddSubjectRequest $request, Course $course)
+    public function addSubjectToCourse(AddSubjectRequest $request, Course $course)
     {
         $data = $request->validated();
 
@@ -175,6 +175,23 @@ class CourseController extends Controller
         } catch (\Throwable $e) {
             Log::error('Add subject to course failed: ' . $e->getMessage(), ['exception' => $e]);
             return back()->with('notification', __('course_subject.add_failed'))->withInput();
+        }
+    }
+
+    public function removeSubjectFromCourse(Course $course, Subject $subject)
+    {
+        try {
+            $alreadyAdded = $course->subjects()->where('subject_id', $subject->id)->exists();
+            if (!$alreadyAdded) {
+                return back()->with('notification', __('course_subject.not_added'))->withInput();
+            }
+
+            $course->subjects()->detach($subject->id);
+
+            return redirect()->route('courses.show', $course->id)->with('notification', __('course_subject.removed'));
+        } catch (\Throwable $e) {
+            Log::error('Remove subject from course failed: ' . $e->getMessage(), ['exception' => $e]);
+            return back()->with('notification', __('course_subject.remove_failed'))->withInput();
         }
     }
 

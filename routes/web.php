@@ -44,11 +44,14 @@ Route::middleware('auth')->group(function () {
         Route::delete('{course}', [CourseController::class, 'destroy'])
             ->name('destroy');
 
-        Route::post('{course}/subjects', [CourseController::class, 'addSubject'])
+        Route::post('{course}/subjects', [CourseController::class, 'addSubjectToCourse'])
             ->name('subject.add');
 
-        Route::get('{course}/subjects/form', [CourseController::class, 'showAddSubject'])
+        Route::get('{course}/subjects/form', [CourseController::class, 'showAddSubjectToCourse'])
             ->name('subject.form');
+
+        Route::delete('{course}/subjects/{subject}', [CourseController::class, 'removeSubjectFromCourse'])
+            ->name('subject.remove');
 
         Route::prefix('{course}/subjects/{subject}')->name('tasks.')->group(function () {
             Route::get('create', [TaskController::class, 'create'])
@@ -85,5 +88,8 @@ Route::middleware('auth')->group(function () {
 
         Route::put('{task}', [TaskController::class, 'update'])
             ->name('update');
+
+        Route::delete('{task}', [TaskController::class, 'destroy'])
+            ->name('destroy');
     });
 });

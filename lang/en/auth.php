@@ -19,4 +19,5 @@ return [
     'privacy' => 'Privacy Policy',
     'invalid_credentials' => 'The provided credentials are incorrect.',
     'logged_out' => 'You have been successfully logged out.',
+    'login_success' => 'Login successful.',
 ];

@@ -23,7 +23,7 @@ class CourseSubject extends Model
 
     public function tasks(): HasMany
     {
-        return $this->hasMany(Task::class);
+        return $this->hasMany(Task::class)->orderBy('sort_order');
     }
 
     public function course(): BelongsTo
@@ -31,7 +31,7 @@ class CourseSubject extends Model
         return $this->belongsTo(Course::class);
     }
 
-    public function subjects(): BelongsTo
+    public function subject(): BelongsTo
     {
         return $this->belongsTo(Subject::class);
     }

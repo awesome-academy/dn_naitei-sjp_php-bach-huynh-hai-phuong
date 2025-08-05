@@ -10,6 +10,12 @@ class Task extends Model
 {
     protected $table = 'course_subject_tasks';
 
+    protected $fillable = [
+        'title',
+        'description',
+        'sort_order',
+    ];
+
     public function courseSubject(): BelongsTo
     {
         return $this->belongsTo(CourseSubject::class);

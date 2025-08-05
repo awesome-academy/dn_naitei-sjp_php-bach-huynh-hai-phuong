@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(callback: function () {
@@ -48,6 +49,14 @@ Route::middleware('auth')->group(function () {
 
         Route::get('{course}/subjects/form', [CourseController::class, 'showAddSubject'])
             ->name('subject.form');
+
+        Route::prefix('{course}/subjects/{subject}')->name('tasks.')->group(function () {
+            Route::get('create', [TaskController::class, 'create'])
+                ->name('create');
+
+            Route::post('store', [TaskController::class, 'store'])
+                ->name('store');
+        });
     });
 
     Route::prefix('subjects')->name('subjects.')->group(function () {
@@ -68,5 +77,13 @@ Route::middleware('auth')->group(function () {
 
         Route::delete('{subject}', [SubjectController::class, 'destroy'])
             ->name('destroy');
+    });
+
+    Route::prefix('tasks')->name('tasks.')->group(function () {
+        Route::get('{task}/edit', [TaskController::class, 'edit'])
+            ->name('edit');
+
+        Route::put('{task}', [TaskController::class, 'update'])
+            ->name('update');
     });
 });

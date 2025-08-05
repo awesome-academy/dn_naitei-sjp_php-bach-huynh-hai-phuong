@@ -10,7 +10,8 @@
             <x-ui.card.content>
                 <x-ui.collapsible>
                     <x-slot:trigger>
-                        <div class="flex items-center gap-2"><span class="font-bold">{{ $subject->title ?: '?' }}</span>
+                        <div class="flex items-center gap-2"><span class="font-bold">{{ $subject->sort_order }}.
+                                {{ $subject->title ?: '?' }}</span>
                             <x-courses.subject-status-badge :status="$subject->status" />
                         </div>
                     </x-slot:trigger>
@@ -39,10 +40,53 @@
                         <div class="flex items-center justify-between gap-2">
                             <span class="font-bold">{{ __('course_subject.action') }}:</span>
                             <div>
+                                <x-ui.button tag="a"
+                                    href="{{ route('courses.tasks.create', ['course' => $course->id, 'subject' => $subject->id]) }}"
+                                    class="size-9 rounded-full" variant="outline">
+                                    <x-fas-plus class="size-4" />
+                                </x-ui.button>
                                 <x-ui.button class="size-9 rounded-full" variant="destructive">
                                     <x-fas-trash-can class="size-4" />
                                 </x-ui.button>
                             </div>
+                        </div>
+                        <div class="w-full border-t border-border my-3"></div>
+                        <div class="space-y-2">
+                            <span class="font-bold">{{ __('task.task_list') }}:</span>
+                            @forelse ($subject->tasks as $task)
+                                <x-ui.collapsible>
+                                    <x-slot:trigger>
+                                        {{ $task['sort_order'] }}. {{ $task['title'] ?: __('task.no_title') }}
+                                    </x-slot:trigger>
+                                    <div class="ml-3 border-l border-border p-3">
+                                        <div class="text-muted-foreground"
+                                            x-data="{ expanded: false, text: '{{ $task['description'] ?: __('task.no_description') }}', limit: 300 }">
+                                            <span class="font-bold block">{{ __('task.task_description') }}:</span>
+                                            <p class="inline"
+                                                x-text="expanded ? text : text.length > limit ? text.slice(0, limit) + '...' : text">
+                                            </p>
+                                            <button x-show="text.length > limit" @click="expanded = !expanded"
+                                                x-text="expanded ? 'Less' : 'More'" class="text-blue-500"></button>
+                                        </div>
+                                        <div class="w-full border-t border-border my-3"></div>
+                                        <div class="flex items-center justify-between gap-2">
+                                            <span class="font-bold">{{ __('task.action') }}:</span>
+                                            <div>
+                                                <x-ui.button tag="a"
+                                                    href="{{ route('tasks.edit', ['task' => $task['id']]) }}"
+                                                    class="size-9 rounded-full" variant="outline">
+                                                    <x-fas-edit class="size-4" />
+                                                </x-ui.button>
+                                                <x-ui.button class="size-9 rounded-full" variant="destructive">
+                                                    <x-fas-trash-can class="size-4" />
+                                                </x-ui.button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </x-ui.collapsible>
+                            @empty
+                                <p class="text-sm text-muted-foreground text-center">{{ __('task.task_empty') }}</p>
+                            @endforelse
                         </div>
                     </div>
                 </x-ui.collapsible>

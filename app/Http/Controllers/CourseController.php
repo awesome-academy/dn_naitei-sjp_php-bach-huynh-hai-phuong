@@ -58,13 +58,23 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        $course->load('subjects');
+        $course->load([
+            'subjects.courseSubjects' => function ($query) use ($course) {
+                $query->where('course_id', $course->id)
+                    ->with('tasks');
+            }
+        ]);
 
         $subjects = $course->subjects->map(function ($subject) {
             $subject->status = optional($subject->pivot)->status ?: CourseSubjectStatus::NOT_STARTED->value;
             $subject->started_at = formatDate(optional($subject->pivot)->started_at);
             $subject->finished_at = formatDate(optional($subject->pivot)->finished_at);
             $subject->estimated_duration_days = optional($subject->pivot)->estimated_duration_days;
+            $subject->sort_order = optional($subject->pivot)->sort_order ?? 1;
+            $courseSubject = $subject->courseSubjects[0] ?? null;
+            $subject->tasks = $courseSubject && $courseSubject->tasks
+                ? $courseSubject->tasks->toArray()
+                : [];
             return $subject;
         });
 

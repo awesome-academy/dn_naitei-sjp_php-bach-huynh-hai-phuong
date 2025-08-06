@@ -17,4 +17,7 @@ return [
     'no_description' => 'Vui lòng nhập mô tả.',
     'action' => 'Hành động',
     'task_empty' => 'Không có công việc nào.',
+    'task_deleted' => 'Xóa công việc thành công.',
+    'task_delete_failed' => 'Xóa công việc thất bại.',
+    'task_delete_warning' => 'Hành động này không thể hoàn tác. Công việc sẽ bị xóa vĩnh viễn khỏi hệ thống.',
 ];

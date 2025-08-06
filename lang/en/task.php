@@ -17,4 +17,7 @@ return [
     'no_description' => 'Description is required.',
     'action' => 'Action',
     'task_empty' => 'There are no tasks.',
+    'task_deleted' => 'Task deleted successfully.',
+    'task_delete_failed' => 'Failed to delete the task.',
+    'task_delete_warning' => 'This action cannot be undone. This will permanently delete the task from the system.',
 ];

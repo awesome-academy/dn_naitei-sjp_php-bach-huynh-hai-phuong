@@ -77,4 +77,24 @@ class TaskController extends Controller
         }
     }
 
+    public function destroy(Task $task)
+    {
+        try {
+            $task->delete();
+
+            $courseId = optional($task->courseSubject)->course_id;
+
+            if (!isset($courseId)) {
+                return back()->with('notification', __('task.task_deleted'));
+            }
+
+            return redirect()
+                ->route('courses.show', $courseId)
+                ->with('notification', __('task.task_deleted'));
+        } catch (\Throwable $e) {
+            Log::error('Task delete failed: ' . $e->getMessage(), ['exception' => $e]);
+            return back()->with('notification', __('task.task_delete_failed'));
+        }
+    }
+
 }

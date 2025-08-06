@@ -39,15 +39,32 @@
                         <div class="w-full border-t border-border my-3"></div>
                         <div class="flex items-center justify-between gap-2">
                             <span class="font-bold">{{ __('course_subject.action') }}:</span>
-                            <div>
+                            <div class="flex gap-2 items-center">
                                 <x-ui.button tag="a"
                                     href="{{ route('courses.tasks.create', ['course' => $course->id, 'subject' => $subject->id]) }}"
                                     class="size-9 rounded-full" variant="outline">
                                     <x-fas-plus class="size-4" />
                                 </x-ui.button>
-                                <x-ui.button class="size-9 rounded-full" variant="destructive">
-                                    <x-fas-trash-can class="size-4" />
-                                </x-ui.button>
+                                <x-ui.alert-dialog title="{{ __('alert.confirm') }}"
+                                    description="{{ __('course_subject.subject_delete_warning') }}">
+                                    <x-slot:trigger>
+                                        <x-ui.button class="size-9 rounded-full" variant="destructive"
+                                            @click="modalOpen = true">
+                                            <x-fas-trash-can class="size-4" />
+                                        </x-ui.button>
+                                    </x-slot:trigger>
+                                    <x-slot:actions>
+                                        <x-ui.button @click="modalOpen = false">{{ __('alert.cancel') }}</x-ui.button>
+                                        <form
+                                            action="{{ route('courses.subject.remove', ['course' => $course->id, 'subject' => $subject->id]) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <x-ui.button variant="destructive" @click="modalOpen = false"
+                                                type="submit">{{ __('alert.delete') }}</x-ui.button>
+                                        </form>
+                                    </x-slot:actions>
+                                </x-ui.alert-dialog>
                             </div>
                         </div>
                         <div class="w-full border-t border-border my-3"></div>
@@ -71,15 +88,30 @@
                                         <div class="w-full border-t border-border my-3"></div>
                                         <div class="flex items-center justify-between gap-2">
                                             <span class="font-bold">{{ __('task.action') }}:</span>
-                                            <div>
-                                                <x-ui.button tag="a"
-                                                    href="{{ route('tasks.edit', ['task' => $task['id']]) }}"
+                                            <div class="flex gap-2 items-center">
+                                                <x-ui.button tag="a" href="{{ route('tasks.edit', ['task' => $task['id']]) }}"
                                                     class="size-9 rounded-full" variant="outline">
                                                     <x-fas-edit class="size-4" />
                                                 </x-ui.button>
-                                                <x-ui.button class="size-9 rounded-full" variant="destructive">
-                                                    <x-fas-trash-can class="size-4" />
-                                                </x-ui.button>
+                                                <x-ui.alert-dialog title="{{ __('alert.confirm') }}"
+                                                    description="{{ __('task.task_delete_warning') }}">
+                                                    <x-slot:trigger>
+                                                        <x-ui.button class="size-9 rounded-full" variant="destructive"
+                                                            @click="modalOpen = true">
+                                                            <x-fas-trash-can class="size-4" />
+                                                        </x-ui.button>
+                                                    </x-slot:trigger>
+                                                    <x-slot:actions>
+                                                        <x-ui.button
+                                                            @click="modalOpen = false">{{ __('alert.cancel') }}</x-ui.button>
+                                                        <form action="{{ route('tasks.destroy', $task['id']) }}" method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <x-ui.button variant="destructive" @click="modalOpen = false"
+                                                                type="submit">{{ __('alert.delete') }}</x-ui.button>
+                                                        </form>
+                                                    </x-slot:actions>
+                                                </x-ui.alert-dialog>
                                             </div>
                                         </div>
                                     </div>

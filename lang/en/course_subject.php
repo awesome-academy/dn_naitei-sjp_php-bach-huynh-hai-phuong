@@ -21,5 +21,9 @@ return [
     'select_subject' => 'Select subject',
     'no_subject_to_add' => 'No available subjects to add',
     'estimated_days' => 'Estimated duration days',
-    'back' => 'Back'
+    'back' => 'Back',
+    'not_added' => 'Subject is not added to the course.',
+    'removed' => 'Subject removed from the course.',
+    'remove_failed' => 'Failed to remove the subject from the course.',
+    'subject_delete_warning' => 'This action cannot be undone. This will permanently remove the subject from the course.',
 ];

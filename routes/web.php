@@ -71,6 +71,18 @@ Route::middleware('auth')->group(function () {
 
         Route::delete('{course}/trainees/{trainee}', [CourseController::class, 'removeTrainee'])
             ->name('trainees.remove');
+
+        Route::get('{course}/supervisors', [CourseController::class, 'supervisors'])
+            ->name('supervisors.index');
+
+        Route::get('{course}/supervisors/form', [CourseController::class, 'showAddSupervisor'])
+            ->name('supervisors.create');
+
+        Route::post('{course}/supervisors', [CourseController::class, 'addSupervisor'])
+            ->name('supervisors.add');
+
+        Route::delete('{course}/supervisors/{supervisor}', [CourseController::class, 'removeSupervisor'])
+            ->name('supervisors.remove');
     });
 
     Route::prefix('subjects')->name('subjects.')->group(function () {

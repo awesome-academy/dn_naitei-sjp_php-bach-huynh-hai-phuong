@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Course\AddSubjectRequest;
+use App\Http\Requests\Course\AddSupervisorRequest;
 use App\Http\Requests\Course\AddTraineeRequest;
 use App\Http\Requests\Course\CreateCourseRequest;
 use App\Http\Requests\Course\UpdateCourseRequest;
@@ -21,6 +22,7 @@ class CourseController extends Controller
     public function __construct()
     {
         self::$TRAINEES_PAGE_SIZE = config('pagination.trainees.per_page', 12);
+        self::$SUPERVISORS_PAGE_SIZE = config('pagination.supervisors.per_page', 12);
     }
 
     /**
@@ -255,6 +257,61 @@ class CourseController extends Controller
         } catch (\Throwable $e) {
             Log::error('Remove trainee from course failed: ' . $e->getMessage(), ['exception' => $e]);
             return back()->with('notification', __('course.trainee_remove_failed'))->withInput();
+        }
+    }
+
+    protected static $SUPERVISORS_PAGE_SIZE;
+
+    public function supervisors(Course $course)
+    {
+        $supervisors = $course->supervisors()->paginate(self::$SUPERVISORS_PAGE_SIZE);
+
+        return view('courses.supervisors.index', compact('supervisors', 'course'));
+    }
+
+    public function showAddSupervisor(Course $course)
+    {
+        $supervisors = $course->supervisors->pluck('id')->toArray();
+
+        $availableSupervisors = User::where('role', Role::SUPERVISOR)->whereNotIn('id', $supervisors)->paginate(self::$SUPERVISORS_PAGE_SIZE);
+
+        return view('courses.supervisors.create', compact('course', 'availableSupervisors'));
+    }
+
+    public function addSupervisor(AddSupervisorRequest $request, Course $course)
+    {
+        $data = $request->validated();
+
+        try {
+            $supervisorId = $data['supervisor_id'];
+
+            $alreadyAdded = $course->supervisors()->where('supervisor_id', $supervisorId)->exists();
+            if ($alreadyAdded) {
+                return back()->with('notification', __('course.supervisor_already_attached'))->withInput();
+            }
+
+            $course->supervisors()->attach($supervisorId);
+
+            return redirect()
+                ->route('courses.supervisors.index', $course->id)
+                ->with('notification', __('course.supervisor_added'));
+        } catch (\Throwable $e) {
+            Log::error('Add supervisor to course failed: ' . $e->getMessage(), ['exception' => $e]);
+            return back()->with('notification', __('course.supervisor_add_failed'))->withInput();
+        }
+    }
+
+    public function removeSupervisor(Course $course, User $supervisor)
+    {
+        try {
+            $course->supervisors()->detach($supervisor->id);
+
+            return redirect()
+                ->route('courses.supervisors.index', $course->id)
+                ->with('notification', __('course.supervisor_removed'));
+        } catch (\Throwable $e) {
+            Log::error('Remove supervisor from course failed: ' . $e->getMessage(), ['exception' => $e]);
+            return back()->with('notification', __('course.supervisor_remove_failed'))->withInput();
         }
     }
 

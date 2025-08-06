@@ -8,5 +8,8 @@ return [
     ],
     'trainees' => [
         'per_page' => 12,
+    ],
+    'supervisors' => [
+        'per_page' => 12,
     ]
 ];

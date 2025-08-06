@@ -44,4 +44,12 @@ return [
     'trainee_deactive' => 'Ngừng hoạt động',
     'trainee_delete_warning' => 'Bạn có chắc chắn muốn xóa học viên này khỏi khóa học không?',
     'supervisor' => 'Người giám sát',
+    'supervisor_already_attached' => 'Người hướng dẫn đã được gán trước đó.',
+    'supervisor_added' => 'Thêm người hướng dẫn thành công.',
+    'supervisor_add_failed' => 'Không thể thêm người hướng dẫn.',
+    'supervisor_removed' => 'Xóa người hướng dẫn thành công.',
+    'supervisor_remove_failed' => 'Không thể xóa người hướng dẫn.',
+    'no_supervisors' => 'Không có người hướng dẫn nào.',
+    'add_supervisor' => 'Thêm người hướng dẫn',
+    'supervisor_delete_warning' => 'Bạn có chắc chắn muốn xóa người hướng dẫn này không?',
 ];

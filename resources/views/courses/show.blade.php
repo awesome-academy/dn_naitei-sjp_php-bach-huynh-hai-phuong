@@ -38,7 +38,7 @@
                 <div class="border-l-border border"></div>
                 <x-ui.button variant="outline" class="w-30 rounded-full" tag="a" href="{{ route('courses.trainees.index', [$course->id]) }}"><x-fas-user-cog />
                     {{ __('course.trainee') }}</x-ui.button>
-                <x-ui.button variant="outline" class="w-30 rounded-full"><x-fas-user-secret />
+                <x-ui.button variant="outline" class="w-30 rounded-full" tag="a" href="{{ route('courses.supervisors.index', [$course->id]) }}"><x-fas-user-secret />
                     {{ __('course.supervisor') }}</x-ui.button>
             </div>
 

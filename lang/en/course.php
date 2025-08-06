@@ -44,4 +44,12 @@ return [
     'trainee_deactive' => 'Inactive',
     'trainee_delete_warning' => 'Are you sure you want to remove this trainee from the course?',
     'supervisor' => 'Supervisor',
+    'supervisor_already_attached' => 'Supervisor is already attached.',
+    'supervisor_added' => 'Supervisor added successfully.',
+    'supervisor_add_failed' => 'Failed to add supervisor.',
+    'supervisor_removed' => 'Supervisor removed successfully.',
+    'supervisor_remove_failed' => 'Failed to remove supervisor.',
+    'no_supervisors' => 'No supervisors available.',
+    'add_supervisor' => 'Add Supervisor',
+    'supervisor_delete_warning' => 'Are you sure you want to remove this supervisor?',
 ];

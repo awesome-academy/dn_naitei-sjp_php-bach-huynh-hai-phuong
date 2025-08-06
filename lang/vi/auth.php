@@ -19,4 +19,5 @@ return [
     'privacy' => 'Chính sách bảo mật',
     'invalid_credentials' => 'Thông tin đăng nhập không đúng.',
     'logged_out' => 'Bạn đã đăng xuất thành công.',
+    'login_success' => 'Đăng nhập thành công.',
 ];

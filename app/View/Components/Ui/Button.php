@@ -2,28 +2,12 @@
 
 namespace App\View\Components\Ui;
 
+use App\Models\Enums\ButtonVariant;
+use App\Models\Enums\ButtonSize;
 use Closure;
 use InvalidArgumentException;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-
-enum ButtonVariant: string
-{
-    case DEFAULT = 'default';
-    case DESTRUCTIVE = 'destructive';
-    case OUTLINE = 'outline';
-    case SECONDARY = 'secondary';
-    case GHOST = 'ghost';
-    case LINK = 'link';
-}
-
-enum ButtonSize: string
-{
-    case DEFAULT = 'default';
-    case SMALL = 'small';
-    case LARGE = 'large';
-    case ICON = 'icon';
-}
 
 class Button extends Component
 {

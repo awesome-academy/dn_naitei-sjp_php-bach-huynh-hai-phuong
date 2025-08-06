@@ -6,6 +6,7 @@ use App\Models\Enums\CourseStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Course extends Model
 {
@@ -46,5 +47,10 @@ class Course extends Model
             ->orderByPivot('sort_order')
             ->withPivot('sort_order', 'status', 'started_at', 'finished_at', 'estimated_duration_days')
             ->withTimestamps();
+    }
+
+    public function courseSubjects(): HasMany
+    {
+        return $this->hasMany(CourseSubject::class);
     }
 }

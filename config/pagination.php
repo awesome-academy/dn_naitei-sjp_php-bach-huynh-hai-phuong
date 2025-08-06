@@ -6,4 +6,7 @@ return [
     'subjects' => [
         'per_page' => 12,
     ],
+    'trainees' => [
+        'per_page' => 12,
+    ]
 ];

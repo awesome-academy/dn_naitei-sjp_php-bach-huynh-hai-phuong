@@ -3,18 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Course\AddSubjectRequest;
+use App\Http\Requests\Course\AddTraineeRequest;
 use App\Http\Requests\Course\CreateCourseRequest;
 use App\Http\Requests\Course\UpdateCourseRequest;
 use App\Models\Course;
 use App\Models\Enums\CourseStatus;
 use App\Models\Enums\CourseSubjectStatus;
+use App\Models\Enums\Role;
 use App\Models\Subject;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
+    public function __construct()
+    {
+        self::$TRAINEES_PAGE_SIZE = config('pagination.trainees.per_page', 12);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -192,6 +200,61 @@ class CourseController extends Controller
         } catch (\Throwable $e) {
             Log::error('Remove subject from course failed: ' . $e->getMessage(), ['exception' => $e]);
             return back()->with('notification', __('course_subject.remove_failed'))->withInput();
+        }
+    }
+
+    protected static $TRAINEES_PAGE_SIZE;
+
+    public function trainees(Course $course)
+    {
+        $trainees = $course->trainees()->paginate(self::$TRAINEES_PAGE_SIZE);
+
+        return view('courses.trainees.index', compact('trainees', 'course'));
+    }
+
+    public function showAddTrainee(Course $course)
+    {
+        $trainees = $course->trainees()->select('users.id')->pluck('users.id')->toArray();
+
+        $availableTrainees = User::where('role', Role::TRAINEE)->whereNotIn('id', $trainees)->paginate(self::$TRAINEES_PAGE_SIZE);
+
+        return view('courses.trainees.create', compact('course', 'availableTrainees'));
+    }
+
+    public function addTrainee(AddTraineeRequest $request, Course $course)
+    {
+        $data = $request->validated();
+
+        try {
+            $traineeId = $data['trainee_id'];
+
+            $alreadyAdded = $course->trainees()->where('user_id', $traineeId)->exists();
+            if ($alreadyAdded) {
+                return back()->with('notification', __('course.trainee_already_attached'))->withInput();
+            }
+
+            $course->trainees()->attach($traineeId);
+
+            return redirect()
+                ->route('courses.trainees.index', $course->id)
+                ->with('notification', __('course.trainee_added'));
+        } catch (\Throwable $e) {
+            Log::error('Add trainee to course failed: ' . $e->getMessage(), ['exception' => $e]);
+            return back()->with('notification', __('course.trainee_add_failed'))->withInput();
+        }
+    }
+
+    public function removeTrainee(Course $course, User $trainee)
+    {
+        try {
+            $course->trainees()->detach($trainee->id);
+
+            return redirect()
+                ->route('courses.trainees.index', $course->id)
+                ->with('notification', __('course.trainee_removed'));
+        } catch (\Throwable $e) {
+            Log::error('Remove trainee from course failed: ' . $e->getMessage(), ['exception' => $e]);
+            return back()->with('notification', __('course.trainee_remove_failed'))->withInput();
         }
     }
 

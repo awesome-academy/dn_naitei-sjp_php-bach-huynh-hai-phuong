@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');
             $table->boolean('is_active')->default(true);
-            $table->timestamp('assigned_at');
+            $table->timestamp('assigned_at')->useCurrent();
             $table->timestamps();
         });
     }

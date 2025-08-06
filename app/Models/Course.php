@@ -28,7 +28,7 @@ class Course extends Model
     }
 
 
-    public function users(): BelongsToMany
+    public function trainees(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'user_course')
             ->withPivot('is_active', 'assigned_at')

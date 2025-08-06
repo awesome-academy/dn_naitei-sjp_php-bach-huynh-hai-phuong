@@ -60,6 +60,17 @@ Route::middleware('auth')->group(function () {
             Route::post('store', [TaskController::class, 'store'])
                 ->name('store');
         });
+        Route::get('{course}/trainees', [CourseController::class, 'trainees'])
+            ->name('trainees.index');
+
+        Route::get('{course}/trainees/form', [CourseController::class, 'showAddTrainee'])
+            ->name('trainees.create');
+
+        Route::post('{course}/trainees', [CourseController::class, 'addTrainee'])
+            ->name('trainees.add');
+
+        Route::delete('{course}/trainees/{trainee}', [CourseController::class, 'removeTrainee'])
+            ->name('trainees.remove');
     });
 
     Route::prefix('subjects')->name('subjects.')->group(function () {

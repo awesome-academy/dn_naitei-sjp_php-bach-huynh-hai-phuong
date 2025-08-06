@@ -31,5 +31,17 @@ return [
     'course_create_failed' => 'Failed to create course. Please try again.',
     'course_update_failed' => 'Failed to update course. Please try again.',
     'course_delete_failed' => 'Failed to delete course. Please try again.',
-    'course_delete_warning' => 'This action cannot be undone. This will permanently delete the course from the system.'
+    'course_delete_warning' => 'This action cannot be undone. This will permanently delete the course from the system.',
+    'trainee_already_attached' => 'Trainee already assigned to the course.',
+    'trainee_added' => 'Trainee added successfully.',
+    'trainee_add_failed' => 'Failed to add trainee. Please try again.',
+    'trainee_removed' => 'Trainee removed successfully.',
+    'trainee_remove_failed' => 'Failed to remove trainee. Please try again.',
+    'trainee' => 'Trainee',
+    'no_trainees' => 'No trainees assigned.',
+    'add_trainee' => 'Add Trainee',
+    'trainee_active' => 'Active',
+    'trainee_deactive' => 'Inactive',
+    'trainee_delete_warning' => 'Are you sure you want to remove this trainee from the course?',
+    'supervisor' => 'Supervisor',
 ];

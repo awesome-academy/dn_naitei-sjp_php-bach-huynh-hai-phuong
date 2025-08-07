@@ -52,4 +52,5 @@ return [
     'no_supervisors' => 'No supervisors available.',
     'add_supervisor' => 'Add Supervisor',
     'supervisor_delete_warning' => 'Are you sure you want to remove this supervisor?',
+    'unauthorized_access' => 'Unauthorized access to course',
 ];

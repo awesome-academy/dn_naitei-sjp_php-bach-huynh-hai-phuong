@@ -52,4 +52,5 @@ return [
     'no_supervisors' => 'Không có người hướng dẫn nào.',
     'add_supervisor' => 'Thêm người hướng dẫn',
     'supervisor_delete_warning' => 'Bạn có chắc chắn muốn xóa người hướng dẫn này không?',
+    'unauthorized_access' => 'Bạn không có quyền truy cập khoá học này',
 ];

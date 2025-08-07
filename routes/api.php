@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CourseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -12,4 +13,9 @@ Route::middleware('auth:sanctum')->group(function () {
         ->name('api.logout');
     Route::get('profile', [AuthController::class, 'profile'])
         ->name('api.profile')->middleware('role:trainee');
+
+    Route::prefix('courses')->group(function () {
+        Route::get('/', [CourseController::class, 'index']);
+        Route::get('/{course}', [CourseController::class, 'show']);
+    });
 });

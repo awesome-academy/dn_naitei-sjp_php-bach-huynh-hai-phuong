@@ -1,3 +1,5 @@
+@use(App\Models\Enums\CourseStatus)
+
 <x-layout.admin-panel title="{{ __('course.show_course') }}">
     <div class="grid grid-cols-[300px_1fr_300px] gap-6">
         <div>
@@ -36,12 +38,21 @@
                     </x-slot:actions>
                 </x-ui.alert-dialog>
                 <div class="border-l-border border"></div>
-                <x-ui.button variant="outline" class="w-30 rounded-full" tag="a" href="{{ route('courses.trainees.index', [$course->id]) }}"><x-fas-user-cog />
+                <x-ui.button variant="outline" class="w-30 rounded-full" tag="a"
+                    href="{{ route('courses.trainees.index', [$course->id]) }}"><x-fas-user-cog />
                     {{ __('course.trainee') }}</x-ui.button>
-                <x-ui.button variant="outline" class="w-30 rounded-full" tag="a" href="{{ route('courses.supervisors.index', [$course->id]) }}"><x-fas-user-secret />
+                <x-ui.button variant="outline" class="w-30 rounded-full" tag="a"
+                    href="{{ route('courses.supervisors.index', [$course->id]) }}"><x-fas-user-secret />
                     {{ __('course.supervisor') }}</x-ui.button>
             </div>
-
+            <div class="my-2 border-t-border border-t"></div>
+            <div>
+                @if ($course->status == CourseStatus::DRAFT)
+                    <x-courses.change-course-status :courseId="$course->id" :isToStartMode="true" />
+                @elseif ($course->status == CourseStatus::STARTED)
+                    <x-courses.change-course-status :courseId="$course->id" :isToStartMode="false" />
+                @endif
+            </div>
         </div>
         <div>
             <div class="flex flex-col justify-center gap-2">
@@ -66,5 +77,6 @@
         </div>
     </div>
     <x-courses.subjects :course="$course" :subjects="$subjects" />
-    <x-ui.button tag="a" href="{{ route('courses.subject.form', $course->id) }}" class="w-full mt-4">{{ __('course_subject.add') }} <x-fas-plus class="size-4" /></x-ui.button>
+    <x-ui.button tag="a" href="{{ route('courses.subject.form', $course->id) }}"
+        class="w-full mt-4">{{ __('course_subject.add') }} <x-fas-plus class="size-4" /></x-ui.button>
 </x-layout.admin-panel>

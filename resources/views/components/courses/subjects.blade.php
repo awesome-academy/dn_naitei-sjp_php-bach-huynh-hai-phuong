@@ -1,3 +1,6 @@
+@use(App\Models\Enums\CourseSubjectStatus)
+@use(App\Models\Enums\CourseStatus)
+
 <div
     class="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t my-4">
     <span class="bg-zinc-50 dark:bg-zinc-900 text-muted-foreground relative z-10 px-2 text-2xl font-medium">
@@ -40,6 +43,10 @@
                         <div class="flex items-center justify-between gap-2">
                             <span class="font-bold">{{ __('course_subject.action') }}:</span>
                             <div class="flex gap-2 items-center">
+                                @if($course->status == CourseStatus::STARTED)
+                                    <x-courses.change-subject-status :courseId="$course->id" :subjectId="$subject->id"
+                                        :isToStartMode="$subject->status == CourseSubjectStatus::NOT_STARTED->value" />
+                                @endif
                                 <x-ui.button tag="a"
                                     href="{{ route('courses.tasks.create', ['course' => $course->id, 'subject' => $subject->id]) }}"
                                     class="size-9 rounded-full" variant="outline">

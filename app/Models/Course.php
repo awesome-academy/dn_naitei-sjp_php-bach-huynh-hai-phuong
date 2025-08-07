@@ -17,6 +17,9 @@ class Course extends Model
         'title',
         'description',
         'featured_image',
+        'status',
+        'started_at',
+        'finished_at',
     ];
 
     protected function casts(): array

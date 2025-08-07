@@ -26,4 +26,6 @@ return [
     'removed' => 'Đã xóa môn học khỏi khóa học.',
     'remove_failed' => 'Xóa môn học khỏi khóa học thất bại.',
     'subject_delete_warning' => 'Hành động này không thể hoàn tác. Môn học sẽ bị xóa vĩnh viễn khỏi khóa học.',
+    'subject_start_warning' => 'Bạn sắp bắt đầu môn học. Bạn có chắc chắn không?',
+    'subject_finish_warning' => 'Bạn sắp kết thúc môn học. Bạn có chắc chắn không?',
 ];

@@ -5,4 +5,5 @@ return [
     'warning' => 'Hành động này không thể hoàn tác. Thao tác này sẽ xoá vĩnh viễn :resource khỏi máy chủ của chúng tôi.',
     'cancel' => 'Huỷ',
     'delete' => 'Xoá',
+    'ok' => 'Đồng ý',
 ];

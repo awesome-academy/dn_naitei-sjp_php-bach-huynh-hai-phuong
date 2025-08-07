@@ -148,6 +148,58 @@ class CourseController extends Controller
         }
     }
 
+    private function isCourseStatus(Course $course, CourseStatus $status)
+    {
+        return $course->status == $status;
+    }
+
+    public function startCourse(Course $course)
+    {
+        if (!$this->isCourseStatus($course, CourseStatus::DRAFT)) {
+            return $this->backWithNotification(__('course.course_start_failed'));
+        }
+
+        try {
+            $course->update([
+                'status' => CourseStatus::STARTED,
+                'started_at' => now(),
+            ]);
+
+            return redirect()
+                ->route('courses.show', $course->id)
+                ->with('notification', __('course.course_started'));
+        } catch (\Throwable $e) {
+            Log::error('Course start failed: ' . $e->getMessage(), ['exception' => $e]);
+            return $this->backWithNotification(__('course.course_start_failed'))->withInput();
+        }
+    }
+
+    public function finishCourse(Course $course)
+    {
+        if (!$this->isCourseStatus($course, CourseStatus::STARTED)) {
+            return $this->backWithNotification(__('course.course_finish_failed'));
+        }
+
+        try {
+            $existNotFinishedSubjects = $course->subjects()->wherePivotNotIn('status', [CourseSubjectStatus::FINISHED])->exists();
+            if ($existNotFinishedSubjects) {
+                return $this->backWithNotification(__('course.course_finish_failed_contains_not_finished_subject'));
+            }
+
+            $course->update([
+                'status' => CourseStatus::FINISHED,
+                'finished_at' => now(),
+            ]);
+
+            return redirect()
+                ->route('courses.show', $course->id)
+                ->with('notification', __('course.course_finished'));
+        } catch (\Throwable $e) {
+            Log::error('Course finish failed: ' . $e->getMessage(), ['exception' => $e]);
+            return $this->backWithNotification(__('course.course_finish_failed'))->withInput();
+        }
+    }
+
     public function showAddSubjectToCourse(Course $course)
     {
         $subjects = $course->subjects()->select('subjects.id')->pluck('subjects.id')->toArray();
@@ -202,6 +254,61 @@ class CourseController extends Controller
         } catch (\Throwable $e) {
             Log::error('Remove subject from course failed: ' . $e->getMessage(), ['exception' => $e]);
             return back()->with('notification', __('course_subject.remove_failed'))->withInput();
+        }
+    }
+
+    private function isCourseSubjectStatus(Course $course, int $subjectId, CourseSubjectStatus $courseSubjectStatus)
+    {
+        return $course->subjects()->where('subject_id', $subjectId)->first()->pivot->status == $courseSubjectStatus->value;
+    }
+
+    public function startSubjectOfCourse(Course $course, Subject $subject)
+    {
+        if (!$this->isCourseStatus($course, CourseStatus::STARTED)) {
+            return $this->backWithNotification(__('course.subject_start_failed'));
+        }
+
+        if (!$this->isCourseSubjectStatus($course, $subject->id, CourseSubjectStatus::NOT_STARTED)) {
+            return $this->backWithNotification(__('course.subject_start_failed1'));
+        }
+
+        try {
+            $course->subjects()->updateExistingPivot($subject->id, [
+                'status' => CourseSubjectStatus::STARTED,
+                'started_at' => now(),
+            ]);
+
+            return redirect()
+                ->route('courses.show', $course->id)
+                ->with('notification', __('course.subject_started'));
+        } catch (\Throwable $e) {
+            Log::error('Subject start failed: ' . $e->getMessage(), ['exception' => $e]);
+            return $this->backWithNotification(__('course.subject_start_failed'))->withInput();
+        }
+    }
+
+    public function finishSubjectOfCourse(Course $course, Subject $subject)
+    {
+        if (!$this->isCourseStatus($course, CourseStatus::STARTED)) {
+            return $this->backWithNotification(__('course.subject_finish_failed'));
+        }
+
+        if (!$this->isCourseSubjectStatus($course, $subject->id, CourseSubjectStatus::STARTED)) {
+            return $this->backWithNotification(__('course.subject_finish_failed'));
+        }
+
+        try {
+            $course->subjects()->updateExistingPivot($subject->id, [
+                'status' => CourseSubjectStatus::FINISHED,
+                'finished_at' => now(),
+            ]);
+
+            return redirect()
+                ->route('courses.show', $course->id)
+                ->with('notification', __('course.subject_finished'));
+        } catch (\Throwable $e) {
+            Log::error('Subject finish failed: ' . $e->getMessage(), ['exception' => $e]);
+            return $this->backWithNotification(__('course.subject_finish_failed'))->withInput();
         }
     }
 

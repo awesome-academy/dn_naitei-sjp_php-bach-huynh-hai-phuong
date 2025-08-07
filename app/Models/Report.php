@@ -10,6 +10,13 @@ class Report extends Model
 {
     protected $table = 'user_task_reports';
 
+    protected $fillable = [
+        'sender_id',
+        'report_type',
+        'report_content',
+        'report_at',
+    ];
+
     protected function casts(): array
     {
         return [

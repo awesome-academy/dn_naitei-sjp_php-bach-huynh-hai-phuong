@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CourseController;
+use App\Http\Controllers\Api\ReportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,5 +18,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('courses')->group(function () {
         Route::get('/', [CourseController::class, 'index']);
         Route::get('/{course}', [CourseController::class, 'show']);
+    });
+
+    Route::prefix('tasks/{task}/reports')->group(function () {
+        Route::post('/', [ReportController::class, 'store']);
+        Route::get('/', [ReportController::class, 'index']);
     });
 });

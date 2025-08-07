@@ -20,4 +20,10 @@ return [
     'task_deleted' => 'Xóa công việc thành công.',
     'task_delete_failed' => 'Xóa công việc thất bại.',
     'task_delete_warning' => 'Hành động này không thể hoàn tác. Công việc sẽ bị xóa vĩnh viễn khỏi hệ thống.',
+    'not_in_course' => 'Bạn không thuộc khóa học này.',
+    'course_not_started' => 'Không thể thực hiện thao tác vì khóa học chưa bắt đầu.',
+    'subject_not_started' => 'Không thể thực hiện thao tác vì môn học chưa bắt đầu.',
+    'subject_not_in_progress' => 'Không thể thực hiện thao tác vì môn học chưa trong quá trình học.',
+    'task_already_completed' => 'Nhiệm vụ này đã được hoàn thành.',
+    'reported' => 'Báo cáo đã được gửi.',
 ];

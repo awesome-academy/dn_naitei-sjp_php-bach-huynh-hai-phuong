@@ -20,4 +20,10 @@ return [
     'task_deleted' => 'Task deleted successfully.',
     'task_delete_failed' => 'Failed to delete the task.',
     'task_delete_warning' => 'This action cannot be undone. This will permanently delete the task from the system.',
+    'not_in_course' => 'You are not enrolled in this course.',
+    'course_not_started' => 'Operation cannot be performed because the course has not started.',
+    'subject_not_started' => 'Operation cannot be performed because the subject has not started.',
+    'subject_not_in_progress' => 'Operation cannot be performed because the subject is not in progress.',
+    'task_already_completed' => 'This task has already been completed.',
+    'reported' => 'The report has been submitted.',
 ];

@@ -6,4 +6,5 @@ return [
     'cancel' => 'Huỷ',
     'delete' => 'Xoá',
     'ok' => 'Đồng ý',
+    'continue' => 'Continue',
 ];

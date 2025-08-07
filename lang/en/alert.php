@@ -6,4 +6,5 @@ return [
     'cancel' => 'Cancel',
     'delete' => 'Delete',
     'ok' => 'OK',
+    'continue' => 'Continue',
 ];

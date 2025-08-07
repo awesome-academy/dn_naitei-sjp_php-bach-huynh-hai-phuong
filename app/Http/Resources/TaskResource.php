@@ -15,7 +15,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *     @OA\Property(
  *         property="user_status",
  *         type="object",
- *         @OA\Property(property="id_done", type="integer", example=0),
+ *         @OA\Property(property="is_done", type="integer", example=0),
  *         @OA\Property(property="done_at", type="string", format="date-time", nullable=true)
  *     )
  * )
@@ -37,7 +37,7 @@ class TaskResource extends JsonResource
                 $pivot = $this->users->first()?->pivot;
 
                 return $pivot ? [
-                    'id_done' => $pivot->id_done,
+                    'is_done' => $pivot->is_done,
                     'done_at' => $pivot->done_at,
                 ] : null;
             })

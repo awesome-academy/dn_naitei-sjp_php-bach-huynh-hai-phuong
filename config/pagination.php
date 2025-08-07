@@ -11,5 +11,11 @@ return [
     ],
     'supervisors' => [
         'per_page' => 12,
+    ],
+    'user_tasks' => [
+        'per_page' => 6,
+    ],
+    'reports' => [
+        'per_page' => 6,
     ]
 ];

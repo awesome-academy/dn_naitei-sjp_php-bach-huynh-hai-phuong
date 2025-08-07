@@ -96,6 +96,10 @@
                                         <div class="flex items-center justify-between gap-2">
                                             <span class="font-bold">{{ __('task.action') }}:</span>
                                             <div class="flex gap-2 items-center">
+                                                <x-ui.button tag="a" href="{{ route('tasks.reports.user_tasks', ['task' => $task['id']]) }}"
+                                                    class="size-9 rounded-full" variant="outline">
+                                                    <x-fas-eye class="size-4" />
+                                                </x-ui.button>
                                                 <x-ui.button tag="a" href="{{ route('tasks.edit', ['task' => $task['id']]) }}"
                                                     class="size-9 rounded-full" variant="outline">
                                                     <x-fas-edit class="size-4" />

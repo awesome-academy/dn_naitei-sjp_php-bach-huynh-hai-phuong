@@ -44,6 +44,18 @@ Route::middleware('auth')->group(function () {
         Route::delete('{course}', [CourseController::class, 'destroy'])
             ->name('destroy');
 
+        Route::post('{course}/start', [CourseController::class, 'startCourse'])
+            ->name('start');
+
+        Route::post('{course}/finish', [CourseController::class, 'finishCourse'])
+            ->name('finish');
+
+        Route::post('{course}/subjects/{subject}/start', [CourseController::class, 'startSubjectOfCourse'])
+            ->name('subject.start');
+
+        Route::post('{course}/subjects/{subject}/finish', [CourseController::class, 'finishSubjectOfCourse'])
+            ->name('subject.finish');
+
         Route::post('{course}/subjects', [CourseController::class, 'addSubjectToCourse'])
             ->name('subject.add');
 

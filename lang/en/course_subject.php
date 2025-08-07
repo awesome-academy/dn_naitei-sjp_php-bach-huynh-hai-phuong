@@ -26,4 +26,6 @@ return [
     'removed' => 'Subject removed from the course.',
     'remove_failed' => 'Failed to remove the subject from the course.',
     'subject_delete_warning' => 'This action cannot be undone. This will permanently remove the subject from the course.',
+    'subject_start_warning' => 'You are going to start the subject. Are you sure?',
+    'subject_finish_warning' => 'You are going to finish the subject. Are you sure?',
 ];

@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('course_subject_task_id')->constrained('course_subject_tasks')->onDelete('cascade');
-            $table->boolean('id_done')->default(false);
+            $table->boolean('is_done')->default(false);
             $table->timestamp('done_at')->nullable();
             $table->timestamps();
         });

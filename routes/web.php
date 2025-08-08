@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
@@ -126,5 +127,15 @@ Route::middleware('auth')->group(function () {
 
         Route::delete('{task}', [TaskController::class, 'destroy'])
             ->name('destroy');
+
+        Route::prefix('{task}/reports')->name('reports.')->group(function () {
+            Route::get('/', [ReportController::class, 'getUserTasksOfATaskWithLastedReport'])->name('user_tasks');
+
+            Route::get('users/{user}', [ReportController::class, 'getReportsOfAUserTask'])->name('user_task');
+
+            Route::post('users/{user}', [ReportController::class, 'commentAUserTask'])->name('comment');
+
+            Route::post('users/{user}/done', [ReportController::class, 'markAsDone'])->name('done');
+        });
     });
 });

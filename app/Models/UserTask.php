@@ -10,6 +10,11 @@ class UserTask extends Model
 {
     protected $table = 'user_task';
 
+    protected $fillable = [
+        'is_done',
+        'done_at',
+    ];
+
     protected function casts(): array
     {
         return [
@@ -29,6 +34,6 @@ class UserTask extends Model
 
     public function task(): BelongsTo
     {
-        return $this->belongsTo(Task::class);
+        return $this->belongsTo(Task::class, 'course_subject_task_id');
     }
 }

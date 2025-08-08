@@ -51,4 +51,7 @@ return [
     'mark_as_done_success' => 'Đã đánh dấu là hoàn thành.',
     'mark_as_done_failed' => 'Đánh dấu hoàn thành thất bại.',
     'reports_empty' => 'Chưa có báo cáo nào.',
+    'user_not_started_subject' => 'Bạn chưa bắt đầu môn học này.',
+    'not_done_all_tasks' => 'Bạn chưa hoàn thành tất cả các nhiệm vụ.',
+    'finish_subject_success' => 'Hoàn thành môn học thành công.',
 ];

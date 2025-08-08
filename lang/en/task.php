@@ -51,4 +51,7 @@ return [
     'mark_as_done_success' => 'Marked as done successfully.',
     'mark_as_done_failed' => 'Failed to mark as done.',
     'reports_empty' => 'No reports available.',
+    'user_not_started_subject' => 'You have not started this subject.',
+    'not_done_all_tasks' => 'You have not completed all tasks.',
+    'finish_subject_success' => 'Subject finished successfully.',
 ];

@@ -41,5 +41,20 @@ return [
                 ],
             ]
         ],
+        [
+            'groupLabel' => 'user.users',
+            'menu' => [
+                [
+                    'href' => '/users',
+                    'label' => 'user.all_users',
+                    'icon' => 'fas-user',
+                ],
+                [
+                    'href' => '/users/create',
+                    'label' => 'user.create_user',
+                    'icon' => 'fas-plus',
+                ],
+            ]
+        ],
     ]
 ];
